@@ -1,0 +1,14 @@
+.dated {
+    color:rgb(255, 255, 255);
+    font-family: 'Manrope Variable', sans-serif;
+    font-size: 23px;
+}
+
+.current-date {
+    position: absolute;
+    top:10%;
+    right:5%;
+    color:white;
+    font-size: 20px;
+    font-family: 'Manrope Variable', sans-serif;
+}

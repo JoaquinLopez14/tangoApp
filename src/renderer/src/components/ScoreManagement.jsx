@@ -17,8 +17,8 @@ function ScoreManagement({ enviarDatos }) {
       setNumPuntajes(datosGuardados[0].puntajes.length);
     }
 
-    const saveNames = JSON.parse(localStorage.getItem("nameJudge")) || ["Juez 1", "Juez 2", "Juez 3"]
-    setJudgeNames(saveNames)
+    const savedNames = JSON.parse(localStorage.getItem("nameJudge")) || ["Juez 1", "Juez 2", "Juez 3"]
+    setJudgeNames(savedNames)
   }, []);
 
   useEffect(() => {
@@ -174,7 +174,7 @@ function ScoreManagement({ enviarDatos }) {
           {pareja.puntajes.map((puntaje, puntajeIndex) => (
             <div key={puntajeIndex} className="input-option-container">
               <EditableJudgeName
-              label={judgeNames[puntajeIndex]}
+              label={judgeNames[puntajeIndex] || ""}
               onLabelChange={(newName) => handleJudgeNameChange(puntajeIndex, newName)}
               />
               <input

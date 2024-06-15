@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../assets/TableOfPoints.css";
 import "../assets/ScoreManagement.css";
-import DatedOfToday from "./DatedOfToday";
+import DatedOfToday from "../hooks/DatedOfToday";
 
 function TableOfPoints({ datos }) {
   const [rank, setRank] = useState("asc");

@@ -4,9 +4,9 @@
     font-size: 23px;
 }
 
-.current-date {
+.date-container {
     position: absolute;
-    top:10%;
+    top:5%;
     right:5%;
     color:white;
     font-size: 20px;

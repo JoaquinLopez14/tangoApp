@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from 'prop-types';
 
-const EditableJudgeName = ({ id,label, onLabelChange }) => {
+const EditableJudgeName = ({label, onLabelChange }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [tempLabel, setTempLabel] = useState(label);
 

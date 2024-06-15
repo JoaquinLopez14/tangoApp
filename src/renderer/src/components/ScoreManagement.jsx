@@ -1,22 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../assets/ScoreManagement.css";
-import DatedOfToday from "../hooks/DatedOfToday";
-import EditableJudgeName from "../hooks/EditableJudgeName";
-import RemoveDancer from "../hooks/RemoveDancer";
-import AddCouple from "../hooks/AddCouple";
-import InputOrden from "../hooks/InputOrden"
-import InputDancerName from "../hooks/InputDancerName";
-import JudgeButtons from "../hooks/InputJudges";
-import AverageScore from "../hooks/InputAverange";
-import SendDataButton from "../hooks/SendDataButton";
+import { DatedOfToday, RemoveDancer, AddCouple, InputOrden, InputDancerName, JudgeButtons, AverageScore, SendDataButton, JudgeScoreInput, EditableJudgeName } from "../Components"
 
 function ScoreManagement({ enviarDatos }) {
   const [parejas, setParejas] = useState([]);
   const [numPuntajes, setNumPuntajes] = useState(3);
-  const [judgeNames, setJudgeNames] = useState([]);
+  const [judgeNames, setJudgeNames] = useState(["Juez 1", "Juez 2", "Juez 3"]);
 
-  // Guardar los datos de los inputs en LocalStorage
+  // Carga los datos al inicio
   useEffect(() => {
     const datosGuardados = JSON.parse(localStorage.getItem("datosParejas")) || [];
     if (datosGuardados.length > 0) {
@@ -30,29 +22,24 @@ function ScoreManagement({ enviarDatos }) {
     localStorage.setItem("datosParejas", JSON.stringify(parejas));
   }, [parejas]);
 
-  // Guardar los datos de los jueces en LocalStorage
+  // Guardar el nombre de los jueces
   useEffect(() => {
     const storedJudges = JSON.parse(localStorage.getItem('judgeNames'));
     if (storedJudges) {
       setJudgeNames(storedJudges);
-    } else {
-      setJudgeNames([
-        { id: 'juez1', name: 'Jurado 1' },
-        { id: 'juez2', name: 'Jurado 2' },
-        { id: 'juez3', name: 'Jurado 3' }
-      ]);
     }
   }, []);
-
-  // Manejo del cambio de nombre en los Jueces
+  
+  // Cambiar el nombre de un Juez
   const handleJudgeNameChange = (index, newName) => {
-    const updatedJudges = judgeNames.map((judge, i) =>
-      i === index ? { ...judge, name: newName } : judge
-    );
-    setJudgeNames(updatedJudges);
-    localStorage.setItem('judgeNames', JSON.stringify(updatedJudges));
-  }
-
+    setJudgeNames((prevState) => {
+      const updatedNames = [...prevState]
+      updatedNames[index] = newName
+      localStorage.setItem('judgeNames',JSON.stringify(updatedNames))
+    return updatedNames
+    });
+  };
+  
   // Manejo de los inputs
   const handleInputChange = (e, index, key) => {
     const { value } = e.target;
@@ -62,7 +49,7 @@ function ScoreManagement({ enviarDatos }) {
       return updateParejas;
     });
   };
-
+  
   // Manejo del puntaje
   const handlePuntajeChange = (e, parejaIndex, puntajeIndex) => {
     let { value } = e.target;
@@ -73,7 +60,7 @@ function ScoreManagement({ enviarDatos }) {
       return updateParejas;
     });
   };
-
+  
   // Añadir un Juez
   const addJudge = (index) => {
     setParejas((prevState) => {
@@ -81,16 +68,9 @@ function ScoreManagement({ enviarDatos }) {
       if (updatedParejas[index].puntajes.length < 5) {
         updatedParejas[index].puntajes.push("");
         setNumPuntajes(updatedParejas[index].puntajes.length);
+        setJudgeNames((prevState) => [...prevState, `Juez ${prevState.length + 1}`]);
       }
       return updatedParejas;
-    });
-    setJudgeNames((prevState) => {
-      if (prevState.length < 5) {
-        const newJudgeName = `Juez ${prevState.length + 1}`;
-        const updatedNames = [...prevState, newJudgeName];
-        return updatedNames;
-      }
-      return prevState;
     });
   };
 
@@ -101,15 +81,9 @@ function ScoreManagement({ enviarDatos }) {
       if (updatedParejas[index].puntajes.length > 1) {
         updatedParejas[index].puntajes.pop();
         setNumPuntajes(updatedParejas[index].puntajes.length);
+        setJudgeNames((prevState) => prevState.slice(0, -1));
       }
       return updatedParejas;
-    });
-    setJudgeNames((prevState) => {
-      if (prevState.length > 1) {
-        const updatedNames = prevState.slice(0, -1);
-        return updatedNames;
-      }
-      return prevState
     });
   };
 
@@ -144,7 +118,6 @@ function ScoreManagement({ enviarDatos }) {
     setParejas([]);
   };
 
-
   return (
     <section className="pr-sc">
       <nav className="title-container">
@@ -170,20 +143,15 @@ function ScoreManagement({ enviarDatos }) {
             handleInputChange={handleInputChange}
           />
           {pareja.puntajes.map((puntaje, puntajeIndex) => (
-            <div key={puntajeIndex} className="input-option-container">
-              <EditableJudgeName
-                id={judgeNames[puntajeIndex].id}
-                label={judgeNames[puntajeIndex].name || ""}
-                onLabelChange={(newName) => handleJudgeNameChange(puntajeIndex, newName)}
-              />
-              <input
-                className="input-point"
-                type="number"
-                maxLength="5"
-                value={puntaje}
-                onChange={(e) => handlePuntajeChange(e, index, puntajeIndex)}
-              />
-            </div>
+            <JudgeScoreInput 
+            key = {puntajeIndex}
+            judgeLabel={ <EditableJudgeName
+              label={judgeNames[puntajeIndex] || `Juez ${puntajeIndex + 1}`}
+              onLabelChange={(newName)=> handleJudgeNameChange(puntajeIndex, newName)}
+             />}
+            puntaje = {puntaje}
+            onChange= {(e) => handlePuntajeChange(e, index, puntajeIndex)}
+            />
           ))}
           <JudgeButtons
             index={index}

@@ -1,0 +1,10 @@
+export { default as DatedOfToday } from "./hooks/DatedOfToday";
+export { default as RemoveDancer } from "./hooks/RemoveDancer";
+export { default as AddCouple } from "./hooks/AddCouple";
+export { default as InputOrden } from "./hooks/InputOrden";
+export { default as InputDancerName } from "./hooks/InputDancerName";
+export { default as JudgeButtons } from "./hooks/AddRemoveJudges";
+export { default as AverageScore } from "./hooks/InputAverange";
+export { default as SendDataButton } from "./hooks/SendDataButton";
+export { default as JudgeScoreInput } from "./hooks/InputJudge";
+export { default as EditableJudgeName} from "./hooks/EditableJudgeName";

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AverageScore = ({ puntajes }) => {
+const AverageScore = ({ puntajes, showlabel }) => {
   const calcularPromedioPareja = (puntajes) => {
     const puntajesSinExtremos = puntajes
       .map((puntaje) => parseFloat(puntaje.replace(",", ".")))
@@ -11,8 +11,8 @@ const AverageScore = ({ puntajes }) => {
   };
 
   return (
-    <div className="input-option-container" id="promedio">
-      <h2 className="input-option-name">Promedio</h2>
+    <div className="input-average-container" id="promedio">
+      {showlabel && <h2 className="input-option-name">Promedio</h2>}
       <input className="input-point" type="number" id="total" value={calcularPromedioPareja(puntajes)} readOnly />
     </div>
   );

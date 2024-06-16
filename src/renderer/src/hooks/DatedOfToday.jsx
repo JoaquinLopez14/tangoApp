@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from "react";
-import "../assets/DateOfToday.css"
 
 function DatedOfToday() {
     const [currentDate, setCurrentDate] = useState(new Date());

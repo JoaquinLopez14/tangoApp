@@ -1,10 +1,10 @@
 import React from "react";
 
-const InputDancerName = ({ index, nombreBailarina, nombreBailarin, handleInputChange }) => {
+const InputDancerName = ({ index, nombreBailarina, nombreBailarin, handleInputChange, showlabel }) => {
     return (
-      <div className="input-names-container">
+      <div className="inputs-names-container">
         <div className="input-name-container">
-          <h2 className="input-option-name">Bailarina</h2>
+          {showlabel && <h2 className="input-option-name">Bailarina</h2>}
             <input
               className="input-name"
               type="text"
@@ -13,7 +13,7 @@ const InputDancerName = ({ index, nombreBailarina, nombreBailarin, handleInputCh
             />
         </div>
           <div className="input-name-container">
-            <h2 className="input-option-name">Bailarín</h2>
+          {showlabel && <h2 className="input-option-name">Bailarin</h2>}
               <input  
                 className="input-name"
                 type="text"

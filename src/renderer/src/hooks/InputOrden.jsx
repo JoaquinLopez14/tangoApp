@@ -1,10 +1,10 @@
 import React from "react";
 
-const InputOrden = ({ index, orden, handleInputChange }) => {
+const InputOrden = ({ index, orden, handleInputChange, showlabel }) => {
     return (
         <>
             <div className="input-order-container">
-            <h2 className="input-option-name"> Orden </h2>
+            {showlabel && <h2 className="input-option-name">Orden</h2>}
             <input
                 className="input-order"
                 type="number"

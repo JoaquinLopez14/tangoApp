@@ -90,6 +90,7 @@ function ScoreManagement({ enviarDatos }) {
   // Añadir una Pareja
   const addCouple = () => {
     const newCouple = {
+      id: Date.now(),
       nombreBailarina: "",
       nombreBailarin: "",
       puntajes: Array(numPuntajes).fill(""),
@@ -121,44 +122,51 @@ function ScoreManagement({ enviarDatos }) {
   return (
     <section className="pr-sc">
       <nav className="title-container">
-        <h1 className="sc-title"> Gestionar Puntajes </h1>
+        <h1 className="sc-title">Gestionar Puntajes</h1>
       </nav>
-      <div className="bt-container">
-        <Link to="/" className="backHome"> Volver Atrás </Link>
+      <div className="bt-backhome-container">
+        <Link to="/" className="backhome">Volver Atrás</Link>
       </div>
       <DatedOfToday />
       <AddCouple onClick={addCouple} />
       {parejas.map((pareja, index) => (
-        <div key={index} className="inputs-container">
+        <div key={pareja.id || index} className="inputs-container">
           <InputOrden
-            key={index}
             index={index}
             orden={pareja.orden || ""}
             handleInputChange={handleInputChange}
+            showlabel= {index===0}
           />
           <InputDancerName
             index={index}
             nombreBailarina={pareja.nombreBailarina}
             nombreBailarin={pareja.nombreBailarin}
             handleInputChange={handleInputChange}
+            showlabel= {index===0}
           />
+            <div className="inputs-score-container">
           {pareja.puntajes.map((puntaje, puntajeIndex) => (
-            <JudgeScoreInput 
-            key = {puntajeIndex}
-            judgeLabel={ <EditableJudgeName
-              label={judgeNames[puntajeIndex] || `Juez ${puntajeIndex + 1}`}
-              onLabelChange={(newName)=> handleJudgeNameChange(puntajeIndex, newName)}
-             />}
-            puntaje = {puntaje}
-            onChange= {(e) => handlePuntajeChange(e, index, puntajeIndex)}
+            <JudgeScoreInput
+              key={puntajeIndex}
+              judgeLabel={
+                index === 0 ? (
+                  <EditableJudgeName
+                    label={judgeNames[puntajeIndex] || `Juez ${puntajeIndex + 1}`}
+                    onLabelChange={(newName) => handleJudgeNameChange(puntajeIndex, newName)}
+                  />
+                ) : null
+              }
+              puntaje={puntaje}
+              onChange={(e) => handlePuntajeChange(e, index, puntajeIndex)}
             />
           ))}
+          </div>
           <JudgeButtons
             index={index}
             onAddJudge={addJudge}
             onRemoveJudge={removeJudge}
           />
-          <AverageScore puntajes={pareja.puntajes} />
+          <AverageScore puntajes={pareja.puntajes} showlabel= {index===0}/>
           <RemoveDancer onRemove={removeDancer} index={index} />
         </div>
       ))}

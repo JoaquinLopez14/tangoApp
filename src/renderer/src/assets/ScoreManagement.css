@@ -18,24 +18,33 @@ input[type=number]::-webkit-outer-spin-button {
     flex-direction: column;
 }
 
-.sc-title {
-    color: white;
-    font-size: 50px;
-    font-size:5cqw;
-    letter-spacing: -5px;
-    font-weight: 100;
-}
-
 .title-container {
-    display: flex;
     text-align: center;
-    justify-content: center;
     width: 100%;
     height: auto;
     padding-top: 10px;
 }
 
-.bt-container {
+.sc-title {
+    color: white;
+    font-weight: 100;
+    font-size:10cqmin
+}
+
+.dated {
+    color:rgb(255, 255, 255);
+    font-size: 23px;
+}
+
+.date-container {
+    position: absolute;
+    top:7%;
+    right:5%;
+    color:white;
+    font-size: 20px;
+}
+
+.bt-backhome-container {
     width: 150px;
     height: 50px;
     box-shadow: inset 0 0 0 1px rgb(255, 255, 255);
@@ -47,7 +56,7 @@ input[type=number]::-webkit-outer-spin-button {
     transition: 0.2s ease-in-out;
 }
 
-.backHome {
+.backhome {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,12 +65,11 @@ input[type=number]::-webkit-outer-spin-button {
     color: #fff;
     text-decoration: none;
     cursor: pointer;
-    text-align: center;
     font-size: 18px;
 }
 
-.bt-newPair {
-    margin-top: 3%;
+.bt-newPair, .bt-sendData {
+    margin: 2%;
 }
 
 .addPair, .send-data{
@@ -88,7 +96,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .inputs-container {
     display: flex;
-    margin-top: 2%;
+    margin-top:10px;
     width: 100vw;
     min-height: auto;
     align-items: center;
@@ -111,8 +119,8 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .input-order {
-    width: 60px;
-    font-size: 40px;
+    width: 50px;
+    font-size: 35px;
 }
 
 .input-point {
@@ -126,26 +134,20 @@ input[type=number]::-webkit-outer-spin-button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: 10px;
     justify-content: center;
 }
 
-.input-names-container {
+.inputs-names-container {
     display: flex;
-    align-items: flex-start;
-    gap:20px
+    gap:5px;
+    text-align: center;
+    margin: 0 10px 0 20px
 }
 
 .input-name-container {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 10px;
     color: white;
-}
-
-.input-order-container {
-    margin-right: 40px;
 }
 
 .input-option-name {
@@ -153,7 +155,17 @@ input[type=number]::-webkit-outer-spin-button {
     color: white;
     font-size: 19px;
     font-weight: 100;
-    letter-spacing: 1px;
+}
+
+.inputs-score-container {
+    display: flex;
+    gap:5px;
+    margin: 0 10px 0 10px
+}
+
+.input-average-container {
+    margin: 0 10px 0 10px;
+    text-align: center;
 }
 
 #total {
@@ -161,31 +173,31 @@ input[type=number]::-webkit-outer-spin-button {
     font-weight: 400;
 }
 
-.send-data {
-    padding: 0;
-    margin-top:50px;
-    margin-bottom: 50px;
+.bt-remove-dancers {
+    margin: auto 10px 0 10px;
 }
 
 .remove-dancer {
-    width: 50px;
-    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-items: center;
     cursor: pointer;
+    margin-top: auto; 
     border: 2px solid black;
-    border-radius: 10px;
-    margin: 30px 0 0 15px;
     background-color: rgba(0, 0, 0, 0.3);
 }
 
 .judge-container {
-    display: flex;  
-    margin: 30px 0 0 20px;
+    height: 100%;
+    display: flex;
     gap:5px;
+    margin: auto 10px 0 10px; 
 }
 
 .addJudge {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
     font-size: 20px;
     background-color: rgba(0, 0, 0, 0.3);
     border: 2px solid black;

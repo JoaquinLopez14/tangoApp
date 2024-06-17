@@ -107,12 +107,11 @@ function ScoreManagement({ enviarDatos }) {
   //Enviar Datos a TableOfPoints
   const handleSubmit = () => {
     const datos = {
-      parejas: parejas.map((pareja, index) => ({
+      parejas: parejas.map((pareja) => ({
         ...pareja,
-        orden: pareja.orden,
-        puntajes: pareja.puntajes,
         total: AverageScore.calcularPromedioPareja(pareja.puntajes),
       })),
+      judgeNames: judgeNames,
     };
 
     enviarDatos(datos);

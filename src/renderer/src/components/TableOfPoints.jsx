@@ -1,24 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import DatedOfToday from "../hooks/DatedOfToday";
 import "../assets/TableOfPoints.css";
 import "../assets/ScoreManagement.css";
-import DatedOfToday from "../hooks/DatedOfToday";
 
 function TableOfPoints({ datos }) {
   const [rank, setRank] = useState("asc");
   const [orden, setOrden] = useState("asc");
   const [allData, setAllData] = useState([]);
+  const [judgeNames, setJudgeNames] = useState([]);
 
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem('datosParejas')) || [];
-    setAllData(storedData);
+      const storedData = JSON.parse(localStorage.getItem('datosParejas')) || [];
+      setAllData(storedData);
+      const storedJudgeNames = JSON.parse(localStorage.getItem('judgeNames')) || [];
+      setJudgeNames(storedJudgeNames);
   }, []);
 
-  useEffect(() => {
+  useEffect (() => {
     if (datos && datos.parejas) {
-      setAllData(datos.parejas);
+      setAllData(prevData => [...prevData, ...datos.parejas])
+      setJudgeNames(datos.judgeNames);
     }
   }, [datos]);
+
+  useEffect (() => {
+    localStorage.setItem('datosParejas', JSON.stringify(allData));
+    localStorage.setItem('judgeNames', JSON.stringify(judgeNames));
+  }, [allData, judgeNames]);
+
 
   const sortByRank = () => {
     const newRank = rank === "asc" ? "desc" : "asc";
@@ -51,33 +61,35 @@ function TableOfPoints({ datos }) {
       <nav className="title-container">
         <h1 className="sc-title">Tabla de Puntuacion</h1>
       </nav>
-      <div className="bt-container">
-        <Link to="/" className="backHome">
-          Volver Atras
-        </Link>
+      <div className="bt-backhome-container">
+        <Link to="/" className="backhome">Volver Atrás</Link>
       </div>
-      <div className="current-date">
-        <DatedOfToday />
-      </div>
-      <div className="list">
-        <button className="button-list" id="rank" onClick={sortByOrden}>Orden</button>
-        <button className="button-list" id="competidores">Competidores</button>
-        <button className="button-list">Juez 1</button>
-        <button className="button-list">Juez 2</button>
-        <button className="button-list">Juez 3</button>
-        <button className="button-list">Juez 4</button>
-        <button className="button-list">Juez 5</button>
-        <button className="button-list">Total</button>
-        <button className="button-list" id="rank" onClick={sortByRank}>Rank</button>
-      </div>
+      <DatedOfToday />
       {!allData || allData.length === 0 ? (
         <div className="no-data">
           <p className="no-data-p">No hay datos disponibles</p>
         </div>
       ) : (
         <div className="score-container">
-          {allData.map((pareja) => (
-            <div className="scores" key={pareja.orden}>
+          <div className="sort-buttons">
+            <button onClick={sortByRank}>
+              Promedio ({rank === "asc" ? "Ascendente" : "Descendente"})
+            </button>
+            <button onClick={sortByOrden}>
+              Orden ({orden === "asc" ? "Ascendente" : "Descendente"})
+            </button>
+          </div>
+          <div className="table-header">
+            <span className="header-item">ORDEN</span>
+            <span className="header-item">COMPETIDORES</span>
+              {judgeNames.map((judge, index) => (
+              <span className="header-item" key={index}>{judge}</span>
+              ))}
+            <span className="header-item">TOTAL</span>
+            <span className="header-item">RANK</span>
+          </div>
+          {allData.map((pareja, index) => (
+            <div className="scores" key={index}>
               <div className="pair-order-container">
                 <span className="pair-order">{pareja.orden}</span>
               </div>

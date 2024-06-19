@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import DatedOfToday from "../hooks/DatedOfToday";
+import { AverageScore } from "../Components";
 import "../assets/TableOfPoints.css";
 import "../assets/ScoreManagement.css";
 
@@ -11,36 +12,41 @@ function TableOfPoints({ datos }) {
   const [judgeNames, setJudgeNames] = useState([]);
 
   useEffect(() => {
-      const storedData = JSON.parse(localStorage.getItem('datosParejas')) || [];
-      setAllData(storedData);
-      const storedJudgeNames = JSON.parse(localStorage.getItem('judgeNames')) || [];
-      setJudgeNames(storedJudgeNames);
+    const storedData = JSON.parse(localStorage.getItem('datosParejas')) || [];
+    setAllData(storedData);
+    const storedJudgeNames = JSON.parse(localStorage.getItem('judgeNames')) || [];
+    setJudgeNames(storedJudgeNames.slice(0, 5));  // Limitar a 5 jueces
   }, []);
 
-  useEffect (() => {
+  useEffect(() => {
     if (datos && datos.parejas) {
-      setAllData(prevData => [...prevData, ...datos.parejas])
-      setJudgeNames(datos.judgeNames);
+      setAllData(prevData => [...prevData, ...datos.parejas]);
+      setJudgeNames(datos.judgeNames.slice(0, 5));  // Limitar a 5 jueces
     }
   }, [datos]);
 
-  useEffect (() => {
+  useEffect(() => {
     localStorage.setItem('datosParejas', JSON.stringify(allData));
     localStorage.setItem('judgeNames', JSON.stringify(judgeNames));
   }, [allData, judgeNames]);
 
-
   const sortByRank = () => {
     const newRank = rank === "asc" ? "desc" : "asc";
     setRank(newRank);
-
-    setAllData(prevData => [...prevData].sort((a, b) => {
-      if (newRank === "asc") {
-        return a.total - b.total;
-      } else {
-        return b.total - a.total;
-      }
-    }));
+  
+    setAllData(prevData => {
+      const sortedData = [...prevData].sort((a, b) => {
+        const promedioA = parseFloat(AverageScore.calcularPromedioPareja(a.puntajes).promedio);
+        const promedioB = parseFloat(AverageScore.calcularPromedioPareja(b.puntajes).promedio);
+  
+        if (newRank === "asc") {
+          return promedioA - promedioB;
+        } else {
+          return promedioB - promedioA;
+        }
+      });
+      return sortedData;
+    });
   };
 
   const sortByOrden = () => {
@@ -57,7 +63,7 @@ function TableOfPoints({ datos }) {
   };
 
   return (
-    <section className="pr-sc">
+    <section className="pr-sc2">
       <nav className="title-container">
         <h1 className="sc-title">Tabla de Puntuacion</h1>
       </nav>
@@ -70,48 +76,49 @@ function TableOfPoints({ datos }) {
           <p className="no-data-p">No hay datos disponibles</p>
         </div>
       ) : (
-        <div className="score-container">
-          <div className="sort-buttons">
-            <button onClick={sortByRank}>
-              Promedio ({rank === "asc" ? "Ascendente" : "Descendente"})
-            </button>
-            <button onClick={sortByOrden}>
-              Orden ({orden === "asc" ? "Ascendente" : "Descendente"})
-            </button>
-          </div>
-          <div className="table-header">
-            <span className="header-item">ORDEN</span>
-            <span className="header-item">COMPETIDORES</span>
+        <table className="score-table">
+          <thead>
+            <tr>
+              <th onClick={sortByOrden} className="th-header" id="bt-admin">Orden</th>
+              <th className="th-header">Competidores</th>
               {judgeNames.map((judge, index) => (
-              <span className="header-item" key={index}>{judge}</span>
+                <th className="th-header" key={index}>{judge}</th>
               ))}
-            <span className="header-item">TOTAL</span>
-            <span className="header-item">RANK</span>
-          </div>
-          {allData.map((pareja, index) => (
-            <div className="scores" key={index}>
-              <div className="pair-order-container">
-                <span className="pair-order">{pareja.orden}</span>
-              </div>
-              <div className="pair-names-container">
-                <ul className="pair-names">
-                  <li className="pair-names-list">{pareja.nombreBailarina}</li>
-                  <li className="pair-names-list">{pareja.nombreBailarin}</li>
-                </ul>
-              </div>
-              <div className="pair-container">
-                {pareja.puntajes.map((puntaje, puntajeIndex) => (
-                  <div className="pair-point-container" key={puntajeIndex}>
-                    <span className="pair-point">{puntaje}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="pair-total-container">
-                <span className="pair-total">{pareja.total}</span>
-              </div>
-            </div>
-          ))}
-        </div>
+              <th onClick={sortByRank} className="th-header" id="bt-admin">Total</th>
+              <th className="th-header">Rank</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allData.map((pareja, index) => {
+              const { promedio, puntajeMin, puntajeMax } = AverageScore.calcularPromedioPareja(pareja.puntajes);
+
+              return (
+                <tr key={index}>
+                  <td className="td-data">{pareja.orden}</td>
+                  <td className="td-data">
+                    <ul className="pair-names">
+                      <li>{pareja.nombreBailarina}</li>
+                      <li>{pareja.nombreBailarin}</li>
+                    </ul>
+                  </td>
+                  {pareja.puntajes.map((puntaje, puntajeIndex) => {
+                    const puntajeNumerico = parseFloat(puntaje.replace(",", ".")).toFixed(3);
+                    return (
+                      <td
+                        className={`td-data ${puntajeNumerico === puntajeMin || puntajeNumerico === puntajeMax ? "td-extremo" : ""}`}
+                        key={puntajeIndex}
+                      >
+                        {puntaje}
+                      </td>
+                    );
+                  })}
+                  <td className="td-data" id="td-total">{promedio}</td>
+                  <td className="td-data">{index + 1}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       )}
     </section>
   );

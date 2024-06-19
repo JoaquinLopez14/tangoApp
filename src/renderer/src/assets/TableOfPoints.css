@@ -1,3 +1,13 @@
+.pr-sc2 {
+    background-color: #5c8374;
+    background-image: url("data:image/svg+xml,%3Csvg width='44' height='12' viewBox='0 0 44 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 12v-2L0 0v10l4 2h16zm18 0l4-2V0L22 10v2h16zM20 0v8L4 0h16zm18 0L22 8V0h16z' fill='%230f0f0f' fill-opacity='0.18' fill-rule='evenodd'/%3E%3C/svg%3E");
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column; 
+}
+
 .no-data {
     margin-top: 20%;
 }
@@ -9,95 +19,78 @@
     font-weight: 100;
 }
 
-.list {
-    width: 100%;
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap:50px;
-    margin-top: 5%;
-    border-bottom: 1px solid white;
-    border-top: 1px solid white
-}
-
-.button-list {
-    width: 100px;
-    height: 40px;
-    background-color: rgba(0, 0, 0, 0);
-    border: none;
-    color: white;
-    font-family: 'Manrope Variable', sans-serif;
-    text-transform: uppercase;
+.score-table {
+    width: 85%;
+    border-collapse: collapse;
+    margin-top: 2em;
     font-size: 20px;
-    font-weight: 900;
+    border: 2px solid #fff;
+    background-color: rgba(255, 255, 255, 0.1);
 }
 
-#competidores {
-    width: 300px;
-}
-
-#rank {
-    pointer-events: all;
-    cursor: pointer;
-    background-color: black;
-}
-
-.score-container {
-    display: flex;
-    width: 100%;
-    min-height: auto;
-    text-align: center;
-    flex-direction: column;
-    margin-top: 50px;
-    font-family: 'Manrope Variable', sans-serif;
-    font-size: 30px;
+.th-header {
+    color: #222;
     font-weight: 500;
-    color:rgb(225, 225, 225);
-}
-    
-.scores {
-    display: flex;
-    margin-bottom:50px
+    background-color: rgba(255, 255, 255, 0.6);
+    padding: 10px;
+    text-transform: uppercase;
 }
 
-.pair-order-container, .pair-names-container, .pair-container, .pair-point-container, .pair-total-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+.score-table th, .score-table td {
+    text-align: center;
 }
 
-.pair-order-container {
-    width: 100px;
-    margin-left:40px
+.score-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
-.pair-names-container {
-    width: 300px;
-    gap: 0; 
-    margin-left:50px;
+.score-table th {
+    padding: 10px;
 }
+
 
 .pair-names {
     list-style: none;
-    gap:0;
+    padding: 0;
+    margin: 0;
 }
 
-.pair-point-container {
-    width: 100px;
+.pair-names li {
+    padding: 2px 0;
 }
 
-.pair-container {
-    margin-left: 50px;
-    gap:50px
+.td-data {
+    color: white;
+    font-size: 25px;
+    padding: 5px;
 }
 
-.pair-total-container{
-    margin-left: 65px
+.score-table tbody tr:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
-.pair-total {
+.score-table tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+#td-total {
     color: yellow;
 }
+
+#bt-admin {
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+#bt-admin:hover {
+    background-color: rgba(63, 63, 63, 0.3);
+}
+
+#td-orden, #td-rank {
+    font-size: 35px;
+}
+
+.td-extremo {
+    color: rgb(255, 84, 84);
+  }
 

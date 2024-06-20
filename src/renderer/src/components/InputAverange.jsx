@@ -11,6 +11,8 @@ const AverageScore = ({ puntajes, showlabel }) => {
       promedio: isNaN(promedio) ? "" : promedio.toFixed(3),
       puntajeMin: puntajesNumericos[0].toFixed(3),
       puntajeMax: puntajesNumericos[puntajesNumericos.length - 1].toFixed(3),
+      indiceMin: puntajes.findIndex(p => parseFloat(p.replace(",", ".")) === puntajesNumericos[0]),
+      indiceMax: puntajes.findIndex(p => parseFloat(p.replace(",", ".")) === puntajesNumericos[puntajesNumericos.length - 1]),
     };
   };
 
@@ -35,6 +37,8 @@ AverageScore.calcularPromedioPareja = (puntajes) => {
     promedio: isNaN(promedio) ? "" : promedio.toFixed(3),
     puntajeMin: puntajesNumericos[0].toFixed(3),
     puntajeMax: puntajesNumericos[puntajesNumericos.length - 1].toFixed(3),
+    indiceMin: puntajes.findIndex(p => parseFloat(p.replace(",", ".")) === puntajesNumericos[0]),
+    indiceMax: puntajes.findIndex(p => parseFloat(p.replace(",", ".")) === puntajesNumericos[puntajesNumericos.length - 1]),
   };
 };
 

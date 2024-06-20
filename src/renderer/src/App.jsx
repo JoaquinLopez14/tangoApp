@@ -1,8 +1,8 @@
   import React, { useState } from 'react';
   import { HashRouter as Router, Route, Routes} from 'react-router-dom';
-  import Home from "./components/Home";
-  import ScoreManagement from './components/ScoreManagement';
-  import TableOfPoints from './components/TableOfPoints';
+  import Home from "./main/Home";
+  import ScoreManagement from './main/ScoreManagement';
+  import TableOfPoints from './main/TableOfPoints';
   import '@fontsource-variable/manrope';
   import '@fontsource/rye';
   import '@fontsource/poppins';

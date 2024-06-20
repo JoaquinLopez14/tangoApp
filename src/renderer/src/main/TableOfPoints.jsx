@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import DatedOfToday from "../hooks/DatedOfToday";
+import DatedOfToday from "../components/DatedOfToday";
 import { AverageScore } from "../Components";
 import "../assets/TableOfPoints.css";
 import "../assets/ScoreManagement.css";
@@ -90,7 +90,7 @@ function TableOfPoints({ datos }) {
           </thead>
           <tbody>
             {allData.map((pareja, index) => {
-              const { promedio, puntajeMin, puntajeMax } = AverageScore.calcularPromedioPareja(pareja.puntajes);
+              const { promedio, indiceMin, indiceMax } = AverageScore.calcularPromedioPareja(pareja.puntajes);
 
               return (
                 <tr key={index}>
@@ -101,17 +101,16 @@ function TableOfPoints({ datos }) {
                       <li>{pareja.nombreBailarin}</li>
                     </ul>
                   </td>
-                  {pareja.puntajes.map((puntaje, puntajeIndex) => {
-                    const puntajeNumerico = parseFloat(puntaje.replace(",", ".")).toFixed(3);
-                    return (
+                  {pareja.puntajes.map((puntaje, puntajeIndex) => (
                       <td
-                        className={`td-data ${puntajeNumerico === puntajeMin || puntajeNumerico === puntajeMax ? "td-extremo" : ""}`}
+                        className={`td-data ${
+                          puntajeIndex === indiceMin || puntajeIndex === indiceMax ? "td-extremo" : ""
+                        }`}
                         key={puntajeIndex}
                       >
                         {puntaje}
                       </td>
-                    );
-                  })}
+                  ))}
                   <td className="td-data" id="td-total">{promedio}</td>
                   <td className="td-data">{index + 1}</td>
                 </tr>

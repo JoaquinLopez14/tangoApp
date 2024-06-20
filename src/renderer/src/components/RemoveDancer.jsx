@@ -1,5 +1,5 @@
 import React from 'react';
-import Trash from '../hooks/Icons';
+import Trash from '../components/Icons';
 
 const RemoveDancer = ({ onRemove, index }) => (
   <div className="bt-remove-dancers">

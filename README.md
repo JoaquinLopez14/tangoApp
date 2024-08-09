@@ -1,14 +1,18 @@
-# tangoapp
+# Tango App
 
-An Electron application with React
+An application to register names of a dance couple and their scores, calculates their average score excluding the highest and lowest score, then displays them in a table.
 
-## Recommended IDE Setup
+### Technologies Used
 
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+```bash
+React
+CSS
+Electron
+```
 
 ## Project Setup
 
-### Install
+### Instalación
 
 ```bash
 $ npm install
